@@ -165,9 +165,18 @@ public class PageNavigation {
                 case 1 -> {
                     showProductList(productList, offset, pageSize);
                 }
-                case 2 -> {}
-                case 3 -> {}
-                case 4 -> {}
+                case 2 -> {
+                    System.out.print("Enter new page size: ");
+                    pageSize = scanner.nextInt();
+                }
+                case 3 -> {
+                    updatePageNumber(pageNumber + 1);
+                    showProductList(productList, offset, pageSize);
+                }
+                case 4 -> {
+                    updatePageNumber(pageNumber - 1);
+                    showProductList(productList, offset, pageSize);
+                }
                 case 5 -> {}
                 default -> System.out.println("Invalid option!");
             }
@@ -179,7 +188,16 @@ public class PageNavigation {
     }
 
     public static void updatePageNumber(int pageNum) {
+        if (pageNum < 1) {
+            pageNumber = 1;
+            return;
+        }
+        if (pageNum > totalPages) {
+            pageNumber = totalPages;
+            return;
+        }
         pageNumber = pageNum;
+        offset = (pageNumber - 1) * pageSize;
     }
 
     public static void showProductList(List<Product> products, int offset, int limit) {
